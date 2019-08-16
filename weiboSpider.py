@@ -106,3 +106,6 @@ class weibo(object):
                 else:
                     page_num = (int)(selector.xpath("//input[@name='mp']")[0].attrib['value'])
                     return page_num
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
