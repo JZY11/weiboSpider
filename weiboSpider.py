@@ -44,3 +44,37 @@ class weibo(object):
         self.following = 0 # 用户关注数
         self.followers = 0 # 用户粉丝数
         self.weibo = [] # 用来存储爬取到的全部微博信息
+
+        def deal_html(self, url):
+            """处理HTML"""
+            try:
+                html = requests.get(url, cookies = self.cookie).content
+                selector = etree.HTML(html)
+                return selector
+            except Exception as e:
+                print('Error:', e)
+                traceback.print_exc()
+
+        def deal_garbled(self, info):
+            """处理乱码问题"""
+            try:
+                info = (info.xpath('string(.)').replace(u'\u200b', '').encode(
+                    sys.stdout.encoding, 'ignore').decode(sys.stdout.encoding))
+                return info
+            except Exception as e:
+                print('Error:', e)
+                traceback.print_exc()
+
+        def get_nickname(self):
+            """获取用户昵称"""
+            try:
+                url = 'htttps://weibo.cn/%d/info' % (self.user_id)
+                selector = self.deal_html(url)
+                nickname = selector.xpath('//title/text()')[0]
+                self.nickname = nickname[:-3]
+                if self.nickname == u'登录 - 新' or self.nickname == u'新浪':
+                    sys.exit(u'cookie错误或已过期,请按照README中方法重新获取')
+                print(u'用户昵称: ' + self.nickname) # 加 u 就可以正常打印出中文
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
