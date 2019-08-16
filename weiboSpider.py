@@ -78,3 +78,22 @@ class weibo(object):
             except Exception as e:
                 print('Error: ', e)
                 traceback.print_exc()
+
+        def get_user_info(self, selector):
+            """获取用户昵称，微博数，关注数，粉丝数"""
+            try:
+                self.get_nickname() # 获取用户昵称
+                user_info = selector.xpath("//div[@class='tip2']/*/text()")
+
+                self.weibo_num = int(user_info[0][3:-1])
+                print(u'微博数: ' + str(self.weibo_num))
+
+                self.following = int(user_info[1][3:-1])
+                print(u'关注数: ' + str(self.following))
+
+                self.followers = int(user_info[2][3:-1])
+                print(u'粉丝数: ' + str(self.followers))
+                print('*' * 100)
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
