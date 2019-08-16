@@ -97,3 +97,12 @@ class weibo(object):
             except Exception as e:
                 print('Error: ', e)
                 traceback.print_exc()
+
+        def get_page_num(self, selector):
+            """获取微博总页数"""
+            try:
+                if selector.xpath("//input[@name='mp']") == []:
+                    page_num = 1
+                else:
+                    page_num = (int)(selector.xpath("//input[@name='mp']")[0].attrib['value'])
+                    return page_num
