@@ -48,8 +48,8 @@ class weibo(object):
         def deal_html(self, url):
             """处理HTML"""
             try:
-                html = requests.get(url, cookies = self.cookie).content
-                selector = etree.HTML(html)
+                html = requests.get(url, cookies = self.cookie).content # 返回的是一个包含服务器资源的Response对象(对象包含从爬虫返回的内容)
+                selector = etree.HTML(html) # etree.HTML():构造了一个XPath解析对象并对HTML文本进行自动修正，，etree.tostring()：输出修正后的结果，类型是bytes，利用decode()方法将其转成str类型
                 return selector
             except Exception as e:
                 print('Error:', e)
