@@ -49,6 +49,7 @@ class weibo(object):
             """处理HTML"""
             try:
                 html = requests.get(url, cookies = self.cookie).content # 返回的是一个包含服务器资源的Response对象(对象包含从爬虫返回的内容)
+                # 解析HTML文档为HTML DOM模型
                 selector = etree.HTML(html) # etree.HTML():构造了一个XPath解析对象并对HTML文本进行自动修正，，etree.tostring()：输出修正后的结果，类型是bytes，利用decode()方法将其转成str类型
                 return selector
             except Exception as e:
@@ -108,4 +109,19 @@ class weibo(object):
                     return page_num
             except Exception as e:
                 print('Error: ', e)
+                traceback.print_exc()
+
+        def get_long_weibo(self, weibo_link):
+            "获取长原始微博"
+            try:
+                selector = self.deal_html(weibo_link)
+                info = selector.xpath("//div[@class='c']")[1]
+                wb_content = self.deal_garbled(info)
+                wb_time = info.xpath("//span[@class='ct']/text()")[0]
+                weibo_content = wb_content[wb_content.find(':') +
+                                           1:wb_content.rfind(wb_time)]
+                return weibo_content
+            except Exception as e:
+                return u'网络出错'
+                print('Error:',e)
                 traceback.print_exc()
