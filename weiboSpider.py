@@ -132,3 +132,12 @@ class weibo(object):
                 weibo_content = self.deal_garbled(info)
                 weibo_content = weibo_content[:weibo_content.rfind(u'赞')]
                 a_text = info.xpath('div//a/text()')
+                if u'全文' in a_text:
+                    weibo_link = 'https://weibo.cn/comment/' + weibo_id
+                    wb_content = self.get_long_weibo(weibo_link)
+                    if wb_content:
+                        weibo_content = wb_content
+                return weibo_content
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
