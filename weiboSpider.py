@@ -151,3 +151,14 @@ class weibo(object):
             except Exception as e:
                 print('Error: ' , e)
                 traceback.print_exc()
+
+        def get_retweet(self, info, weibo_id):
+            "获取转发微博"
+            try:
+                original_user = info.xpath("div/span[@class='cmt']/a/text()")
+                if not original_user:
+                    wb_content = u'转发微博已被删除'
+                    return wb_content
+                else:
+                    original_user = original_user[0]
+                wb_content = self.deal_garbled(info)
