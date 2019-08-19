@@ -125,3 +125,10 @@ class weibo(object):
                 return u'网络出错'
                 print('Error:',e)
                 traceback.print_exc()
+
+        def get_original_weibo(self, info, weibo_id):
+            "获取原创的微博"
+            try:
+                weibo_content = self.deal_garbled(info)
+                weibo_content = weibo_content[:weibo_content.rfind(u'赞')]
+                a_text = info.xpath('div//a/text()')
