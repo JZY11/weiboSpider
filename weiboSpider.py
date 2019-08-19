@@ -141,3 +141,13 @@ class weibo(object):
             except Exception as e:
                 print('Error: ', e)
                 traceback.print_exc()
+
+        def get_long_retweet(self, weibo_link):
+            "获取长转发微博"
+            try:
+                wb_content = self.get_long_weibo(weibo_link)
+                weibo_content = wb_content[:wb_content.rfind(u'原文转发')]
+                return weibo_content
+            except Exception as e:
+                print('Error: ' , e)
+                traceback.print_exc()
