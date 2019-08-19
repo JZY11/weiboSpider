@@ -162,3 +162,20 @@ class weibo(object):
                 else:
                     original_user = original_user[0]
                 wb_content = self.deal_garbled(info)
+                wb_content = wb_content[wb_content.find(':') +
+                                        1:wb_content.rfind(u'赞')]
+                wb_content = wb_content[:wb_content.rfind(u'赞')]
+                a_text = info.xpath('div//a/text()')
+                if u'全文' in a_text:
+                    weibo_link = 'http://weibo.cn/comment/' + weibo_id
+                    weibo_content = self.get_long_retweet(weibo_link)
+                    if weibo_content:
+                        wb_content = weibo_content
+                    retweet_reason = self.deal_garbled(info.xpath('div')[-1])
+                    retweet_reason = retweet_reason[:retweet_reason.rindex(u'赞')]
+                    wb_content = (retweet_reason + '\n' + u'原始用户: ' + original_user +
+                                  '\n' + u'转发内容: ' + wb_content)
+                    return wb_content
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
