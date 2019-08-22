@@ -179,3 +179,11 @@ class weibo(object):
             except Exception as e:
                 print('Error: ', e)
                 traceback.print_exc()
+
+        def is_original(self, info):
+            """判断微博是否为原创微博"""
+            is_original = info.xpath("div/span[@class='cmt']")
+            if len(is_original) > 3:
+                return False
+            else:
+                return True
