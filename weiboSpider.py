@@ -197,3 +197,7 @@ class weibo(object):
                 else:
                     weibo_content = self.getweet(info, weibo_id)
                 print(weibo_content)
+                return weibo_content
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
