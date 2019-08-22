@@ -201,3 +201,14 @@ class weibo(object):
             except Exception as e:
                 print('Error: ', e)
                 traceback.print_exc()
+
+        def get_publish_place(self, info):
+            """获取微博发布位置"""
+            try:
+                div_first = info.xpath('div')[0]
+                a_list = div_first.xpath('a')
+                publish_place = u'无'
+                for a in a_list:
+                    if ('place.weibo.com' in a.xpath('@href')[0]
+                            and a.xpath('text()')[0] == u'显示地图'):
+                        weibo_a = div_first.xpath("span[@class='ctt']/a")
