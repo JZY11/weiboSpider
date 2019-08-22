@@ -187,3 +187,13 @@ class weibo(object):
                 return False
             else:
                 return True
+
+        def get_weibo_content(self, info, is_original):
+            """获取微博内容"""
+            try:
+                weibo_id = info.xpath('@id')[0][2:]
+                if is_original:
+                    weibo_content = self.get_original_weibo(info, weibo_id)
+                else:
+                    weibo_content = self.getweet(info, weibo_id)
+                print(weibo_content)
