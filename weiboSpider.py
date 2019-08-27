@@ -227,3 +227,18 @@ class weibo(object):
             except Exception as e:
                 print('Error: ', e)
                 traceback.print_exc()
+
+        def get_publish_tool(self, info):
+            """获取微博发布工具"""
+            try:
+                str_time = info.xpath("div/span[@class='ct']")
+                str_time = self.deal_garbled(str_time[0])
+                if len(str_time.split(u'来自')) > 1:
+                    publish_tool = str_time.split(u'来自')[1]
+                else:
+                    publish_tool = u'无'
+                print(u'微博发布工具: ' + publish_tool)
+                return publish_tool
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
