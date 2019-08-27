@@ -222,3 +222,8 @@ class weibo(object):
                                     publish_place = u'无'
                             publish_place = self.deal_garbled(publish_place)
                             break
+                            print(u'微博发布位置：' + publish_place)
+                            return publish_place
+            except Exception as e:
+                print('Error: ', e)
+                traceback.print_exc()
