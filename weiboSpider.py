@@ -212,3 +212,13 @@ class weibo(object):
                     if ('place.weibo.com' in a.xpath('@href')[0]
                             and a.xpath('text()')[0] == u'显示地图'):
                         weibo_a = div_first.xpath("span[@class='ctt']/a")
+                        if len(weibo_a) >= 1:
+                            publish_place = weibo_a[-1]
+                            if (u'视频' == div_first.xpath(
+                                    "span[@class='ctt']/a/text()")[-1][-2:]):
+                                if len(weibo_a) >= 2:
+                                    publish_place = weibo_a[-2]
+                                else:
+                                    publish_place = u'无'
+                            publish_place = self.deal_garbled(publish_place)
+                            break
